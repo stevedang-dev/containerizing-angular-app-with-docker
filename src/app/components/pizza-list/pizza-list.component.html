@@ -1,0 +1,31 @@
+<div class="row" [formGroup]="formGroup">
+    <div class="col-md-12">
+        <div class="header">
+            <h3>
+              Your Order
+            </h3>
+        </div>
+        <div formArrayName="pizzas" class="pizza-container">
+            <ng-container *ngFor="let pizza of pizzas?.controls; let i = index">
+                <div
+                    [formGroupName]="i"
+                    class="pizza"
+                    (click)="selectPizza(i)"
+                    [ngClass]="{'active': formGroup?.get('selectedPizzaIndex')?.value === i}"
+                >
+                    <div class="col-md-9">
+                        {{i+1}}. {{ (pizza.get('size').value)[0] }} Pizza
+                    </div>
+<div class="col-md-3">
+    <button mat-icon-button (click)="deletePizza(i)">
+        <mat-icon class="remove-icon">remove_circle</mat-icon>
+    </button>
+</div>
+                </div>
+            </ng-container>
+        </div>
+        <button class="add-pizza-button" (click)="addPizza()">
+            <mat-icon class="remove-icon">add_circle</mat-icon> Add Pizza
+        </button>
+    </div>
+</div>

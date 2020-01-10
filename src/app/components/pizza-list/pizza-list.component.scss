@@ -1,0 +1,30 @@
+.pizza-container {
+    .pizza {
+        display: flex;
+        flex: 1;
+        border: 1px solid #bdaaff;
+
+        font-size: 16px;
+        padding: 10px 15px;
+        text-align: center;
+        cursor: pointer;
+
+        .col-md-9 {
+            align-self: center;
+        }
+
+        &.active {
+            background: #673ab7;
+            color: white;
+        }
+
+    }
+}
+
+.add-pizza-button {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}

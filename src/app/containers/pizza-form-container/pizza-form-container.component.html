@@ -1,0 +1,63 @@
+<div class="container pizza-form">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <app-selected-pizza
+                    [selectedPizza]="selectedPizza"
+                ></app-selected-pizza>
+            </div>
+            <h3>Delivery Address</h3>
+            <div class="row">
+                <app-customer-details
+                    [group]="form?.get('customerDetails')"
+                ></app-customer-details>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button
+                        #placeOrderButton
+                        type="button"
+                        class="btn-primary"
+                        (click)="placeOrder()"
+                        data-toggle=""
+                        data-target="#myModal"
+                    >Place Order</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn-danger" (click)="reset()">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <app-pizza-list
+                [formGroup]="form"
+                [pizzas]="pizzas"
+            ></app-pizza-list>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Your Pizza is on its way!</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            We have received your order! It will arrive soon.
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+        </div>
+    </div>
+</div>

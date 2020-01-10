@@ -1,0 +1,69 @@
+<div class="container" [formGroup]="group">
+    <div class="row">
+        <!-- Mat Form Field & Mat Input -->
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="First Name"
+                    formControlName="firstName"
+                />
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="Last Name"
+                    formControlName="lastName"
+                />
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="Phone Number"
+                    formControlName="phoneNumber"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- Delivery Address -->
+    <div class="row" [formGroup]="group?.get('address')">
+        <!-- Mat Form Field & Mat Input -->
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="Street Address"
+                    formControlName="street"
+                />
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="Apt. Number, Floor"
+                    formControlName="apt"
+                />
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="City" formControlName="city" />
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="full-width-input">
+                <input
+                    matInput
+                    placeholder="Zip Code"
+                    formControlName="zipcode"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<!-- <pre> {{ group.value | json }}</pre> -->
