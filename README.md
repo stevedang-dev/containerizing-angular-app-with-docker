@@ -10,7 +10,7 @@
 
 ## I. Angular and Containers
 
-### 1. Key Course Concepts
+### 1. [Key Course Concepts](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/1)
 
 - Use nginx, reverse proxy, serve up static content
 - Host the image of nginx + Angular (code embedded inside) in a container.
