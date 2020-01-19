@@ -10,12 +10,12 @@
 
 ## I. Angular and Containers
 
-### 1. Key Course Concepts
+### 1. [Key Course Concepts](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/1)
 
 - Use nginx, reverse proxy, serve up static content
 - Host the image of nginx + Angular (code embedded inside) in a container.
 
-#### Docker commands:
+#### Docker commands
 
 - Create an image, put it up in a repo, pull the image down to a machine, server, virtual machine.
 
@@ -76,6 +76,12 @@ docker rm <container ID>
 
 #### Run the Angular App in a Container
 
+- Change output path in `angular.json`
+
+```json
+"outputPath": "dist",
+```
+
 - Run a real web server in the container and link it back to the local source code.
 - Create `config/nginx.conf` file.
 
@@ -107,9 +113,18 @@ server {
 - `$(pwd)` means current working directory, an alias.
 
 ```dockerfile
+FROM node:alpine AS builder
+WORKDIR /app
+COPY . .
+RUN npm install && \
+    npm run build
+
 FROM nginx:alpine
 LABEL authors="Steve Dang"
-COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/ /usr/share/nginx/html/
+
+# COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+
 # Use the following commands to build the image and run the container(run from root folder)
 # 1. Build the project using
 # ng build --prod --watch --delete-output-path false
@@ -119,6 +134,7 @@ COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 
 # 3. Run the Docker Image
 # docker run -p 8080:80 -v $(pwd)/dist:/usr/share/nginx/html nginx-angular
+
 
 ```
 
@@ -130,6 +146,16 @@ COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 ng build --prod --watch --delete-output-path false
 ```
 
-## Pull Requests
+- Build a docker image name `nginx-angular`.
 
-- Update README.md
+```bash
+docker build -t nginx-angular -f nginx.dockerfile .
+```
+
+- Take this `nginx-angular` image and run it.
+
+```bash
+docker run -p 8080:80 -v $(pwd)/dist:/usr/share/nginx/html nginx-angular
+```
+
+![image](https://user-images.githubusercontent.com/47277517/72672576-0d09b980-3a2a-11ea-8634-4721ae68628e.png)

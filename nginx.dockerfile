@@ -1,6 +1,14 @@
+FROM node:alpine AS builder
+WORKDIR /app
+COPY . .
+RUN npm install && \
+    npm run build
+
 FROM nginx:alpine
 LABEL authors="Steve Dang"
-COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/ /usr/share/nginx/html/
+
+# COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Use the following commands to build the image and run the container(run from root folder)
 # 1. Build the project using
