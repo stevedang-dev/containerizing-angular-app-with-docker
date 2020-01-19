@@ -157,3 +157,5 @@ docker build -t nginx-angular -f nginx.dockerfile .
 ```bash
 docker run -p 8080:80 -v $(pwd)/dist:/usr/share/nginx/html nginx-angular
 ```
+
+![image](https://user-images.githubusercontent.com/47277517/72672576-0d09b980-3a2a-11ea-8634-4721ae68628e.png)
