@@ -8,17 +8,17 @@
 
    - [Key Course Concepts](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#1-key-course-concepts)
 
-		+ [Docker Commands]()
-		+ [Docker Flags]()
-   - [Why Docker?](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#why-docker)
+		+ [Docker Commands](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-commands)
+		+ [Docker Flags](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-flags)
+   - [Why Docker?](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#2-why-docker)
    - [Benefits of Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#benefits-of-containers)
-   - [Run Angular App in a Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#run-the-angular-app-in-a-container)
+   - [Run Angular App in a Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#3-run-the-angular-app-in-a-container)
 
 2. [Creating a Multi-stage Dockerfile](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#ii-creating-a-multi-stage-dockerfile)
-   - [Creating the Angular Development Dockerfile]()
-   - [Multi-stage Dockerfiles]()
-   - [Create the Angular Build Stage]()
-   - [Docker Extension]()
+   - [Creating the Angular Development Dockerfile](#1-creating-the-angular-development-dockerfile)
+   - [Multi-stage Dockerfiles](#2-multi-stage-dockerfiles)
+   - [Create the Angular Build Stage](#3-create-the-angular-build-stage-nginx-stage)
+   - [Docker Extension](#4-docker-extension)
 
 ## Modules
 
