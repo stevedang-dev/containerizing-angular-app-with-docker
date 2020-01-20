@@ -1,4 +1,4 @@
-# Angular App & docker
+# Angular App & Docker
 
 - Containerizing Angular App with Docker.
 - AZURE DEMO: https://pizza-lover.azurewebsites.net
