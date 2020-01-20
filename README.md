@@ -1,6 +1,6 @@
 # Angular App & docker
 
-- Containerizing Angular App with docker.
+- Containerizing Angular App with Docker.
 
 ## Table of Contents
 
@@ -27,6 +27,11 @@
 	- [Image Registry Options](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#3-image-registry-options)
 	- [Deploying the Angualar Runtime Image to a Registry](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#4-deploying-the-angualar-runtime-image-to-a-registry)
 	- [Running the Angualar container in Azure](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#5-running-the-angualar-container-in-azure)
+
+4. [Running Multiple Containers]()
+	- [Running the Application with Docker Compose]()
+	- [Exploring the Docker Compose File]()
+	- [Options for Deploying Multiple Image/Containers]()
 
 ## Modules
 
@@ -109,6 +114,19 @@ CONTAINER ID	IMAGE		COMMAND
 0667146a63c1	nginx-angular 	"nginx -g 'daemon of…"
 CREATED		STATUS		PORTS               	NAMES
 3 hours ago	Up 3 hours	0.0.0.0:8080->80/tcp 	mystifying_chaum
+```
+
+- Build docker containers with docker compose
+
+``` bash
+docker-compose -f docker-compose.prod.yml build
+```
+
+- Run all the containers, stop all
+
+```bash
+docker-compose up
+docker-compose down
 ```
 
 #### Docker flags
@@ -441,3 +459,132 @@ docker pull stevedang/nginx-angular:1.0.0
 
 
 ---
+
+## IV. [Running Multiple Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/4)
+
+### 1. Running the Application with Docker Compose
+- There are two containers need to bring up (Angular and Nodejs containers) in a way that they can talk to each other.
+
+```
+- Step 1: Rebuild project.
+- Step 2: Build both server and fontend app: **docker-compose build**, this will build the containers for server and frontend.
+- Step 3: Bring containers up and run them: **docker-compose up**, (use cadvisor to monitor the existing containers)
+- Step 4: Stop all the containers: **docker-compose down**.
+```
+
+- Node dockerfile
+
+``` dockerfile
+FROM node:alpine
+
+LABEL author="Steve Dang"
+
+WORKDIR /var/www/angular-node-service
+
+COPY package.json package.json
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+ENTRYPOINT ["node", "server.js"]
+
+```
+
+- **docker-compose up**
+
+![image](https://user-images.githubusercontent.com/47277517/72747661-49046200-3b83-11ea-803d-de8d636b8c1e.png)
+
+- cAdvisor Docker Containers: http://localhost:8080/containers/
+
+![image](https://user-images.githubusercontent.com/47277517/72747795-a0a2cd80-3b83-11ea-8927-6b826a889928.png)
+![image](https://user-images.githubusercontent.com/47277517/72747875-ce881200-3b83-11ea-88aa-07a6f2f3d0ac.png)
+![image](https://user-images.githubusercontent.com/47277517/72747959-0f802680-3b84-11ea-85a4-381ef422eff4.png)
+
+- **docker-compose down**
+
+![image](https://user-images.githubusercontent.com/47277517/72748030-3b9ba780-3b84-11ea-915e-c46cbb5a468c.png)
+
+### 2. Exploring the Docker Compose File
+
+- Docker Compose Yml file
+
+``` yml
+# Run docker-compose build
+# Run docker-compose up
+# Live long and prosper
+
+version: "3.1"
+
+# There are 3 services here: nginx, node, and cadvisor
+services:
+
+  # Fontend Angular
+  nginx:
+    container_name: nginx-angular
+	# Image name
+	image: nginx-angular
+	# Where to find the docker file to build
+	build:
+	  # Location in root
+      context: .
+      dockerfile: nginx.dockerfile
+	# Link the /usr/share/nginx/html back to dist folder
+	volumes:
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+	  - node
+	# Use the same group to talk to each other
+    networks:
+	  - app-network
+
+  # Backend Node
+  node:
+    container_name: angular-node-service
+    image: angular-node-service
+    build:
+      context: ./server
+      dockerfile: node.dockerfile
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    networks:
+	  - app-network
+
+  # Bridge to monitor the containers
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8080:8080"
+    networks:
+	  - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+```
+
+### 3. Options for Deploying Multiple Image/Containers
+
+![image](https://user-images.githubusercontent.com/47277517/72748839-53742b00-3b86-11ea-923e-cbd4071d5cdf.png)
+
+- [**KUBERNETES**](https://kubernetes.io/):
+	- Manage and orchestrate many containers.
+	- Scale them out.
+	- Replace containers as updates come out.
+	- Self-headling
+
+![image](https://user-images.githubusercontent.com/47277517/72748803-40615b00-3b86-11ea-8cb5-fe306d8e5ca3.png)
+
