@@ -4,6 +4,8 @@
 - AZURE DEMO: https://pizza-lover.azurewebsites.net
 - Docker Hub Image: https://hub.docker.com/r/stevedang/nginx-angular
 
+![image](https://user-images.githubusercontent.com/47277517/72750034-b5825f80-3b89-11ea-9a54-78c7b4d22e85.png)
+
 ## Table of Contents
 
 1. [Angular and Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#i-angular-and-containers)
