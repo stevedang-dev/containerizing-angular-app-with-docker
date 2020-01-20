@@ -28,10 +28,10 @@
 	- [Deploying the Angualar Runtime Image to a Registry](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#4-deploying-the-angualar-runtime-image-to-a-registry)
 	- [Running the Angualar container in Azure](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#5-running-the-angualar-container-in-azure)
 
-4. [Running Multiple Containers]()
-	- [Running the Application with Docker Compose]()
-	- [Exploring the Docker Compose File]()
-	- [Options for Deploying Multiple Image/Containers]()
+4. [Running Multiple Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#iv-running-multiple-containers)
+	- [Running the Application with Docker Compose](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#1-running-the-application-with-docker-compose)
+	- [Exploring the Docker Compose File](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#2-exploring-the-docker-compose-file)
+	- [Options for Deploying Multiple Image/Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#3-options-for-deploying-multiple-imagecontainers)
 
 ## Modules
 
@@ -523,24 +523,24 @@ services:
   # Fontend Angular
   nginx:
     container_name: nginx-angular
-	# Image name
-	image: nginx-angular
-	# Where to find the docker file to build
-	build:
-	  # Location in root
-      context: .
-      dockerfile: nginx.dockerfile
-	# Link the /usr/share/nginx/html back to dist folder
-	volumes:
-      - ./dist:/usr/share/nginx/html
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-	  - node
-	# Use the same group to talk to each other
-    networks:
-	  - app-network
+    # Image name
+    image: nginx-angular
+    # Where to find the docker file to build
+    build:
+      # Location in root
+         context: .
+         dockerfile: nginx.dockerfile
+    # Link the /usr/share/nginx/html back to dist folder
+    volumes:
+         - ./dist:/usr/share/nginx/html
+       ports:
+         - "80:80"
+         - "443:443"
+       depends_on:
+      - node
+    # Use the same group to talk to each other
+       networks:
+      - app-network
 
   # Backend Node
   node:
@@ -554,7 +554,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-	  - app-network
+      - app-network
 
   # Bridge to monitor the containers
   cadvisor:
@@ -568,7 +568,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-	  - app-network
+      - app-network
 
 networks:
   app-network:
