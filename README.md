@@ -10,6 +10,7 @@
 
 		+ [Docker Commands](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-commandse)
 		+ [Docker Flags](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-flags)
+
    - [Why Docker?](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#2-why-docker)
    - [Benefits of Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#benefits-of-containers)
    - [Run Angular App in a Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#3-run-the-angular-app-in-a-container)
@@ -21,11 +22,11 @@
    - [Docker Extension](#4-docker-extension)
 
 3. [Deploying the Image and Running the Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#iii-deploying-the-image-and-running-the-container)
-	- [Running the Angualar Container Locally]()
-	- [Running the Angualar container using the VS Code Docker Extension]()
-	- [Image Registry Options]()
-	- [Deploying the Angualar Runtime Image to a Registry]()
-	- [Running the Angualar container in Azure]()
+	- [Running the Angualar Container Locally](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#1-running-the-angualar-container-locally)
+	- [Running the Angualar container using the VS Code Docker Extension](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#2-running-the-angualar-container-using-the-vs-code-docker-extension)
+	- [Image Registry Options](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#3-image-registry-options)
+	- [Deploying the Angualar Runtime Image to a Registry](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#4-deploying-the-angualar-runtime-image-to-a-registry)
+	- [Running the Angualar container in Azure](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#5-running-the-angualar-container-in-azure)
 
 ## Modules
 
@@ -232,6 +233,9 @@ docker run -p 8080:80 -v $(pwd)/dist:/usr/share/nginx/html nginx-angular
 
 ![image](https://user-images.githubusercontent.com/47277517/72672576-0d09b980-3a2a-11ea-8634-4721ae68628e.png)
 
+
+---
+
 ## II. [Creating a Multi-stage Dockerfile](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/2)
 
 ### 1. Creating the Angular Development Dockerfile
@@ -341,6 +345,10 @@ CREATED		STATUS		PORTS               	NAMES
 ![image](https://user-images.githubusercontent.com/47277517/72675662-a7cbbd80-3a55-11ea-998b-de850f48bd68.png)
 ![image](https://user-images.githubusercontent.com/47277517/72675674-f11c0d00-3a55-11ea-9acb-46ea17ab528f.png)
 
+
+---
+
+
 ## III. [Deploying the Image and Running the Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/3)
 
 ### 1. Running the Angualar Container Locally
@@ -434,3 +442,6 @@ docker pull stevedang/nginx-angular:1.0.0
 - DEMO: https://pizza-lover.azurewebsites.net
 
 ![image](https://user-images.githubusercontent.com/47277517/72696348-d1462100-3b09-11ea-836f-69490efb035a.png)
+
+
+---
