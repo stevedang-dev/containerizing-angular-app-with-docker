@@ -432,10 +432,6 @@ docker pull stevedang/nginx-angular:1.0.0
 
 ![image](https://user-images.githubusercontent.com/47277517/72695906-46185b80-3b08-11ea-8429-3e757e224027.png)
 
-- Review and create
-
-
-![image](https://user-images.githubusercontent.com/47277517/72695949-6f38ec00-3b08-11ea-81ba-5580d40fef1f.png)
 
 - Then Azure can pull the image down and run the image through its own server
 
