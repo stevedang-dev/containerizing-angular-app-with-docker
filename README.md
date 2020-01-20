@@ -1,6 +1,8 @@
 # Angular App & docker
 
 - Containerizing Angular App with Docker.
+- AZURE DEMO: https://pizza-lover.azurewebsites.net
+- Docker Hub Image: https://hub.docker.com/r/stevedang/nginx-angular
 
 ## Table of Contents
 
