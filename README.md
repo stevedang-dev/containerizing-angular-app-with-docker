@@ -8,7 +8,7 @@
 
    - [Key Course Concepts](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#1-key-course-concepts)
 
-		+ [Docker Commands](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-commands)
+		+ [Docker Commands](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-commandse)
 		+ [Docker Flags](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#docker-flags)
    - [Why Docker?](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#2-why-docker)
    - [Benefits of Containers](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#benefits-of-containers)
@@ -19,6 +19,13 @@
    - [Multi-stage Dockerfiles](#2-multi-stage-dockerfiles)
    - [Create the Angular Build Stage](#3-create-the-angular-build-stage-nginx-stage)
    - [Docker Extension](#4-docker-extension)
+
+3. [Deploying the Image and Running the Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker#iii-deploying-the-image-and-running-the-container)
+	- [Running the Angualar Container Locally]()
+	- [Running the Angualar container using the VS Code Docker Extension]()
+	- [Image Registry Options]()
+	- [Deploying the Angualar Runtime Image to a Registry]()
+	- [Running the Angualar container in Azure]()
 
 ## Modules
 
@@ -79,6 +86,30 @@ docker rm <container ID>
 docker system prune
 ```
 
+- Find and remove docker image:
+
+```bash
+docker images
+docker rmi <Image ID - first 3 letters>
+```
+
+- If there's an error,
+
+```
+Error response from daemon: conflict: unable to delete cfc715a87d1f (cannot be forced) - image is being used by running container 0667146a63c1
+```
+
+- Run **docker ps -a** to show all the running containers,
+- Stop the container **docker stop 066**
+- Remove it **docker rm 066**
+
+```
+CONTAINER ID	IMAGE		COMMAND
+0667146a63c1	nginx-angular 	"nginx -g 'daemon of…"
+CREATED		STATUS		PORTS               	NAMES
+3 hours ago	Up 3 hours	0.0.0.0:8080->80/tcp 	mystifying_chaum
+```
+
 #### Docker flags
 
 - Run a specific docker file: `-f <file-name>`
@@ -93,6 +124,11 @@ docker build -t nginx-angular .
 
 ```bash
 docker build -t nginx-angular:1.0.0 -f nginx.prod.dockerfile .
+```
+
+- Detach mode: **-d**
+```
+docker run -d -p 8080:80 nginx-angular
 ```
 
 ### 2. Why Docker
@@ -304,3 +340,97 @@ CREATED		STATUS		PORTS               	NAMES
 
 ![image](https://user-images.githubusercontent.com/47277517/72675662-a7cbbd80-3a55-11ea-998b-de850f48bd68.png)
 ![image](https://user-images.githubusercontent.com/47277517/72675674-f11c0d00-3a55-11ea-9acb-46ea17ab528f.png)
+
+## III. [Deploying the Image and Running the Container](https://github.com/stevedang-dev/containerizing-angular-app-with-docker/pull/3)
+
+### 1. Running the Angualar Container Locally
+
+- Build the docker image:
+
+```bash
+docker build -t nginx-angular -f nginx.prod.dockerfile .
+```
+
+- Detach mode: **-d**
+``` bash
+docker run -d -p 8080:80 nginx-angular
+```
+
+### 2. Running the Angualar container using the VS Code Docker Extension
+
+- Build the docker image:
+
+![image](https://user-images.githubusercontent.com/47277517/72683245-a9bc6d80-3aa3-11ea-9d97-3ef74e2d4561.png)
+
+- Detach mode: **-d**
+
+![image](https://user-images.githubusercontent.com/47277517/72685226-1ccedf80-3ab6-11ea-87e7-72bde5c33e35.png)
+
+### 3. Image Registry Options
+
+- Container Registry stores Docker Images similar to GitHub,
+so different env (QA, STG, PROD) could pull them down and run.
+
+![image](https://user-images.githubusercontent.com/47277517/72687151-27df3b00-3ac9-11ea-9d46-cc118916b37a.png)
+
+- Only a layer get updated, then Container Registry will keep track of the changes.
+	+ Create images (middle)
+	+ Registry is like a shelf system that can track the changes of the images on the shelf.
+	+ Server has access to the registry can pull the container down and run it. **Consistency between the environments.**
+
+
+![image](https://user-images.githubusercontent.com/47277517/72687224-c1a6e800-3ac9-11ea-95da-918b52ee2741.png)
+
+#### Container Registries
+- Docker Images can be stored in the cloud or onsite using container registries.
+
+- Options:
+	+ Docker Hub
+	+ Azure Container Registry
+	+ Amazon EC2 Container Registry
+	+ Private Registry
+	+ Google Cloud
+
+### 4. Deploying the Angualar Runtime Image to a Registry
+
+- Tag image by the **registry** name
+
+![image](https://user-images.githubusercontent.com/47277517/72687486-3da22f80-3acc-11ea-9c00-47045265e936.png)
+![image](https://user-images.githubusercontent.com/47277517/72695195-b07bcc80-3b05-11ea-9ae6-4b9c8eefa433.png)
+
+- Run the image:
+
+![image](https://user-images.githubusercontent.com/47277517/72695236-d43f1280-3b05-11ea-8dbe-68fe9afda12a.png)
+
+- Push the image to the registry
+
+![image](https://user-images.githubusercontent.com/47277517/72695348-2da74180-3b06-11ea-8345-0631db0933c1.png)
+
+- Then the image will be available on Docker Hub
+
+![image](https://user-images.githubusercontent.com/47277517/72695389-53344b00-3b06-11ea-84c4-24d44cd01398.png)
+
+- It can be pulled from anywhere
+
+``` bash
+docker pull stevedang/nginx-angular:1.0.0
+```
+
+### 5. Running the Angualar container in Azure
+
+![image](https://user-images.githubusercontent.com/47277517/72695815-ef128680-3b07-11ea-86ae-9fd294b70d9b.png)
+
+- Select Docker Hub
+
+![image](https://user-images.githubusercontent.com/47277517/72695906-46185b80-3b08-11ea-8429-3e757e224027.png)
+
+- Review and create
+
+
+![image](https://user-images.githubusercontent.com/47277517/72695949-6f38ec00-3b08-11ea-81ba-5580d40fef1f.png)
+
+- Then Azure can pull the image down and run the image through its own server
+
+- DEMO: https://pizza-lover.azurewebsites.net
+
+![image](https://user-images.githubusercontent.com/47277517/72696348-d1462100-3b09-11ea-836f-69490efb035a.png)

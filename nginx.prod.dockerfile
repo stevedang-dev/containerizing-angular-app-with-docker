@@ -5,6 +5,11 @@ LABEL author="Steve Dang"
 WORKDIR /app
 # Copy package.json into the working directory, name it the same
 COPY package.json package.json
+RUN npm cache clean --force
+RUN npm config set registry https://registry.npmjs.org/
+RUN npm cache verify
+RUN rm -rf  package-lock.json
+RUN rm -rf node_modules
 RUN npm install
 # Copy everything then build it to the dist folder, escape --prod by --
 COPY . .
